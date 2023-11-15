@@ -2,42 +2,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: weatherforecast
   labels:
     azure.workload.identity/use: 'true'
-  namespace: ${namespace_name}
 spec:
   selector:
     matchLabels:
-      tier: myapp
+      tier: weatherforecast
   template:
     metadata:
       labels:
-        tier: myapp
-        app: myapp
+        tier: weatherforecast
+        app: weatherforecast
     spec:
-      serviceAccountName: ${service_account_name}
       containers:
-      - name: myapp
-        image: ${myapp_image}
+      - name: weatherforecast
+        image: atiaksdemo.azurecr.io/weatherforecast/api:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp
-  namespace: ${namespace_name}
+  name: weatherforecast
 spec:
   ports:
   - port: 80
     targetPort: 5133
   selector:
-    app: myapp
+    app: weatherforecast
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: myapp
-  namespace: ${namespace_name}
+  name: weatherforecast
   annotations:
     kubernetes.io/ingress.class: azure/application-gateway
     appgw.ingress.kubernetes.io/backend-path-prefix: "/weatherForecast"
@@ -45,10 +41,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /wf
         pathType: Prefix
         backend:
           service:
-            name: myapp
+            name: weatherforecast
             port:
               number: 80

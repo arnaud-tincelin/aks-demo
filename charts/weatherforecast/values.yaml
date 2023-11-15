@@ -2,11 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 3
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: ""
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
@@ -42,15 +42,16 @@ service:
 
 ingress:
   enabled: true
-  className: ""
+  className: azure/application-gateway
   annotations: {}
+    appgw.ingress.kubernetes.io/backend-path-prefix: "/weatherForecast"
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
   - host:
     paths:
-    - path: /weatherforecast
-      pathType: ImplementationSpecific
+    - path: /weatherForecast
+      pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -69,7 +70,7 @@ resources: {}
   #   memory: 128Mi
 
 autoscaling:
-  enabled: false
+  enabled: true
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80

@@ -68,21 +68,21 @@ resource "azurerm_role_assignment" "aks_networkcontributor" {
   scope                = azurerm_subnet.gateway.id
 }
 
-resource "azurerm_user_assigned_identity" "myapp" {
-  name                = "myapp"
+resource "azurerm_user_assigned_identity" "howtoaks" {
+  name                = "howtoaks"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
 }
 
-resource "azurerm_federated_identity_credential" "myapp" {
-  name                = "myapp"
-  parent_id           = azurerm_user_assigned_identity.myapp.id
+resource "azurerm_federated_identity_credential" "howtoaks" {
+  name                = "howtoaks"
+  parent_id           = azurerm_user_assigned_identity.howtoaks.id
   resource_group_name = azurerm_resource_group.this.name
   audience            = ["api://AzureADTokenExchange"]
   issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
-  subject             = "system:serviceaccount:${kubernetes_namespace.weatherforecast.metadata[0].name}:mytestsa"
+  subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
 
-  depends_on = [helm_release.weatherforecast]
+  depends_on = [helm_release.howtoaks]
 }
 
 resource "local_file" "kubeconfig" {

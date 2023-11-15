@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "howtoaks.fullnameApi" . }}-test-connection"
+  labels:
+    {{- include "howtoaks.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "howtoaks.fullnameApi" . }}:{{ .Values.api.service.port }}']
+  restartPolicy: Never
