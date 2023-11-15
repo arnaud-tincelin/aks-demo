@@ -80,7 +80,9 @@ resource "azurerm_federated_identity_credential" "myapp" {
   resource_group_name = azurerm_resource_group.this.name
   audience            = ["api://AzureADTokenExchange"]
   issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
-  subject             = "system:serviceaccount:${kubernetes_namespace.myapp.metadata[0].name}:${kubernetes_service_account.myapp.metadata[0].name}"
+  subject             = "system:serviceaccount:${kubernetes_namespace.weatherforecast.metadata[0].name}:mytestsa"
+
+  depends_on = [helm_release.weatherforecast]
 }
 
 resource "local_file" "kubeconfig" {

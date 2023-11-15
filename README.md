@@ -5,12 +5,12 @@ Exposes a weather forecast api through an ingress (AGIC)
 ## Demo Scenario
 
 1. Deploy infrastructure with terraform
-  - Network design (VNET, Subnets)
-  - Node pools design
-  - ACR
-  - AKS: enable workload identity, Entra ID integration (RBAC), AGIC addon, CSI Secret store addon
+    - Network design (VNET, Subnets)
+    - Node pools design
+    - ACR
+    - AKS: enable workload identity, Entra ID integration (RBAC), AGIC addon, CSI Secret store addon
 1. How to deploy sample app in Kubernetes (in default / named namespaces)
-  - Kubectl CLI
+    - Kubectl CLI
 1. Application overview
 1. AGIC presentation
 1. CSI Secret store presentation
@@ -19,19 +19,36 @@ Exposes a weather forecast api through an ingress (AGIC)
 1. Deploy Helm chart
 1. Network policies
 
-```sh
+## Deploy Infrastructure
+
+pre-requisites:
+
+- [Az cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) is installed
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) is installed
+
+```bash
 az login
 cd terraform
 terraform init
 terraform apply --auto-approve
 ```
 
-## Helm Chart
+## Publish & Deploy Helm Chart
+
+pre-requisites:
+
+- `GitHub Pages` has been configured on main/docs (in `Settings`)
+- cluster's kubeconfig file has been retrievied
+- [Helm](https://helm.sh/docs/intro/install/) is installed
 
 ```bash
 cd charts
 helm create weatherforecast
 helm lint .
 helm package weatherforecast
-helm repo add weatherforecast https://arnaud-tincelin.github.io/aks-demo
+cd -
+# mv weatherforecast-x.x.x.tgz docs/
+helm repo index docs --url https://arnaud-tincelin.github.io/aks-demo
+helm repo add aks-demo https://arnaud-tincelin.github.io/aks-demo
+helm install test aks-demo/weatherforecast
 ```

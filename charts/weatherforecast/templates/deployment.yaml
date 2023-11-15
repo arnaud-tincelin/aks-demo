@@ -37,16 +37,16 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 5133
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /weatherforecast
-              port: http
+              port: 5133
           readinessProbe:
             httpGet:
               path: /weatherforecast
-              port: http
+              port: 5133
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

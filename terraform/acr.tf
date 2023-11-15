@@ -12,6 +12,6 @@ resource "terraform_data" "acr_build" {
 
   provisioner "local-exec" {
     command     = "az acr build --registry ${self.triggers_replace["registry"]} --image myapp/workload:latest --platform linux ."
-    working_dir = abspath("${path.module}/../app")
+    working_dir = abspath("${path.module}/../weatherforecast")
   }
 }
