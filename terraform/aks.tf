@@ -36,9 +36,11 @@ resource "azurerm_kubernetes_cluster" "this" {
     secret_rotation_enabled = true
   }
 
-  # workload_autoscaler_profile {
-  #   keda_enabled = true
-  # }
+  azure_active_directory_role_based_access_control {
+    managed                = true
+    admin_group_object_ids = [] #TODO
+    azure_rbac_enabled     = true
+  }
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "default" {
