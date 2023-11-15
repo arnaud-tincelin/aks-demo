@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "howtoaks.fullname" . }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "howtoaks.selectorLabelsApi" . | nindent 6 }}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          {{- include "howtoaks.selectorLabelsFrontend" . | nindent 10 }}
+    ports:
+    - port: 80
+      protocol: TCP

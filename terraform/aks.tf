@@ -86,6 +86,12 @@ resource "azurerm_user_assigned_identity" "howtoaks" {
   resource_group_name = azurerm_resource_group.this.name
 }
 
+resource "azurerm_role_assignment" "howtoaks_secret_officer" {
+  principal_id         = azurerm_user_assigned_identity.howtoaks.principal_id
+  role_definition_name = "Key Vault Secret Officer"
+  scope                = azurerm_key_vault.this.id
+}
+
 resource "azurerm_federated_identity_credential" "howtoaks" {
   name                = "howtoaks"
   parent_id           = azurerm_user_assigned_identity.howtoaks.id

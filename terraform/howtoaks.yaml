@@ -1,0 +1,26 @@
+api:
+  image:
+    repository: ${api_image}
+    tag: ${api_image_tag}
+  serviceAccount:
+    name: ${api_service_account_name}
+
+frontend:
+  image:
+    repository: ${frontend_image}
+    tag: ${frontend_image_tag}
+
+
+
+csiSecretStore:
+  clientID: ${csi_client_id}
+  tenantId: ${csi_tenant_id}
+  keyvaultName: ${csi_vault_name}
+  objects:  |
+      array:
+%{for secret in secrets ~}
+      - |
+        objectName: ${secret.name}
+        objectType: ${secret.type}
+        objectVersion: ${secret.version}
+%{endfor~}

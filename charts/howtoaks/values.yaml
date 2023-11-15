@@ -103,3 +103,15 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+csiSecretStore:
+  clientID: ""
+  tenantId: ""
+  keyvaultName: ""
+  objects: ""
+    # |
+    #   array:
+    #   - |
+    #     objectName: ${secret.name}
+    #     objectType: ${secret.type}
+    #     objectVersion: ${secret.version}

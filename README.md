@@ -45,9 +45,9 @@ pre-requisites:
 cd charts
 helm create howtoaks
 helm lint .
-helm package howtoaks
-cd -
-# mv howtoaks-x.x.x.tgz docs/
+cd ../docs
+helm package ../charts/howtoaks
+cd ..
 helm repo index docs --url https://arnaud-tincelin.github.io/aks-demo
 helm repo add aks-demo https://arnaud-tincelin.github.io/aks-demo
 helm install test aks-demo/howtoaks
