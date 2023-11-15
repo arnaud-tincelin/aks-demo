@@ -14,7 +14,7 @@ csiSecretStore:
   clientID: ${csi_client_id}
   tenantId: ${csi_tenant_id}
   keyvaultName: ${csi_vault_name}
-  objects:  |
+  objects: |
     array:
 %{for secret in csi_secrets ~}
     - |

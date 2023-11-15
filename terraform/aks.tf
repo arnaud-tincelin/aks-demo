@@ -95,16 +95,16 @@ resource "azurerm_role_assignment" "howtoaks_secret_officer" {
   scope                = azurerm_key_vault.this.id
 }
 
-# resource "azurerm_federated_identity_credential" "howtoaks" {
-#   name                = "howtoaks"
-#   parent_id           = azurerm_user_assigned_identity.howtoaks.id
-#   resource_group_name = azurerm_resource_group.this.name
-#   audience            = ["api://AzureADTokenExchange"]
-#   issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
-#   subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
+resource "azurerm_federated_identity_credential" "howtoaks" {
+  name                = "howtoaks"
+  parent_id           = azurerm_user_assigned_identity.howtoaks.id
+  resource_group_name = azurerm_resource_group.this.name
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
+  subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
 
-#   depends_on = [helm_release.howtoaks]
-# }
+  depends_on = [helm_release.howtoaks]
+}
 
 resource "local_file" "kubeconfig" {
   content  = azurerm_kubernetes_cluster.this.kube_admin_config_raw
