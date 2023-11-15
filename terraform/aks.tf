@@ -107,6 +107,6 @@ resource "azurerm_role_assignment" "howtoaks_secret_officer" {
 # }
 
 resource "local_file" "kubeconfig" {
-  content  = azurerm_kubernetes_cluster.this.kube_config_raw
+  content  = azurerm_kubernetes_cluster.this.kube_admin_config_raw
   filename = "${path.module}/kubeconfig"
 }
