@@ -32,4 +32,6 @@ terraform apply --auto-approve
 cd charts
 helm create weatherforecast
 helm lint .
+helm package weatherforecast
+helm repo add weatherforecast https://arnaud-tincelin.github.io/aks-demo
 ```

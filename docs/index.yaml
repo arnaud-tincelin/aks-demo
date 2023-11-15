@@ -3,7 +3,7 @@ entries:
   weatherforecast:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-15T11:11:22.599000653+01:00"
+    created: "2023-11-15T11:44:17.129943134+01:00"
     description: A Helm chart for Kubernetes
     digest: a914f95584d223519e5e9b6dc4dd00e7f874da84685881d00ab2f9222c6ed1da
     home: https://github.com/arnaud-tincelin/aks-demo
@@ -17,6 +17,6 @@ entries:
     - https://github.com/arnaud-tincelin/aks-demo
     type: application
     urls:
-    - https://github.com/arnaud-tincelin/aks-demo/weatherforecast-0.1.0.tgz
+    - https://arnaud-tincelin.github.io/aks-demo/weatherforecast-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-15T11:11:22.585809179+01:00"
+generated: "2023-11-15T11:44:17.11101273+01:00"
