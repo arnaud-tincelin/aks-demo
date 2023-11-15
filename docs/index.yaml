@@ -3,9 +3,9 @@ entries:
   howtoaks:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-11-15T20:36:47.154244407+01:00"
+    created: "2023-11-15T21:03:45.401323836+01:00"
     description: Deploy the HowToAks application
-    digest: 4e3807fccd0d0347dd77ae1d9a750340dabd45098a8b2fb2bfd941a1d85129d9
+    digest: ee4f1ee59e58bf6306a54a6de0141066ba3a73d86cc1e56bd5d4759d3535d436
     name: howtoaks
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-11-15T20:36:47.143689074+01:00"
+    created: "2023-11-15T21:03:45.391651799+01:00"
     description: A Helm chart for Kubernetes
     digest: 5a54719351b9d0a6f27802bdbc2cbd8a14d035eac1e9edf91b9526aaff5e3212
     name: howtoaks
@@ -24,7 +24,7 @@ entries:
   weatherforecast:
   - apiVersion: v2
     appVersion: 1.17.0
-    created: "2023-11-15T20:36:47.170994744+01:00"
+    created: "2023-11-15T21:03:45.416808612+01:00"
     description: A Helm chart for Kubernetes
     digest: 47d350149d0abdf73d8810c47a9657e5f16635ddcca9cd9e8cd911c1c0797659
     home: https://github.com/arnaud-tincelin/aks-demo
@@ -40,4 +40,4 @@ entries:
     urls:
     - https://arnaud-tincelin.github.io/aks-demo/weatherforecast-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-15T20:36:47.127330649+01:00"
+generated: "2023-11-15T21:03:45.374124305+01:00"

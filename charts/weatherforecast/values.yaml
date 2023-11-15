@@ -42,10 +42,10 @@ service:
 
 ingress:
   enabled: true
-  className: azure/application-gateway
+  className: ""
   annotations: {}
     appgw.ingress.kubernetes.io/backend-path-prefix: "/weatherForecast"
-    # kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: azure/application-gateway
     # kubernetes.io/tls-acme: "true"
   hosts:
   - host:

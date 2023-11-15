@@ -90,9 +90,9 @@ frontend:
 
 ingress:
   enabled: true
-  className: azure/application-gateway
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  className: ""
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host:
@@ -108,10 +108,4 @@ csiSecretStore:
   clientID: ""
   tenantId: ""
   keyvaultName: ""
-  objects: ""
-    # |
-    #   array:
-    #   - |
-    #     objectName: ${secret.name}
-    #     objectType: ${secret.type}
-    #     objectVersion: ${secret.version}
+  objects: []
