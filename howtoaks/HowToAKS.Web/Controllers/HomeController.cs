@@ -26,7 +26,7 @@ namespace HowToAKS.Web.Controllers
                 {
                     var request = new HttpRequestMessage
                     {
-                        RequestUri = new Uri("http://howtoaks-webapi:8081/api/values") // When deploying in the default namespace, then you only use the container/pod name in the dns.                        
+                        RequestUri = new Uri("http://myapp-howtoaks-api.howtoaks:8080/weatherforecast") // When deploying in the default namespace, then you only use the container/pod name in the dns.
                         // RequestUri = new Uri("http://howtoaks-webapi.back-end:8081/api/values") // When deploying in custom namespaces, then you must include the namespace in the dns.
                     };
 

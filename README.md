@@ -50,5 +50,5 @@ helm package ../charts/howtoaks
 cd ..
 helm repo index docs --url https://arnaud-tincelin.github.io/aks-demo
 helm repo add aks-demo https://arnaud-tincelin.github.io/aks-demo
-helm install test aks-demo/howtoaks
+# helm install test aks-demo/howtoaks
 ```
