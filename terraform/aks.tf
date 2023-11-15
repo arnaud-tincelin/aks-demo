@@ -1,3 +1,13 @@
+resource "azuread_group" "aks_admin" {
+  display_name     = "ati-aks-demo-admin"
+  mail_enabled     = true
+  security_enabled = true
+
+  owners = [
+    data.azuread_client_config.current.object_id,
+  ]
+}
+
 resource "azurerm_kubernetes_cluster" "this" {
   name                      = "aks-demo"
   location                  = azurerm_resource_group.this.location
@@ -38,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   azure_active_directory_role_based_access_control {
     managed                = true
-    admin_group_object_ids = [] #TODO
+    admin_group_object_ids = [azuread_group.aks_admin.id]
     azure_rbac_enabled     = true
   }
 }
