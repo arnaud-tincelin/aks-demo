@@ -1,10 +1,13 @@
 resource "azuread_group" "aks_admin" {
   display_name     = "ati-aks-demo-admin"
-  mail_enabled     = true
   security_enabled = true
 
   owners = [
-    data.azuread_client_config.current.object_id,
+    data.azurerm_client_config.current.object_id,
+  ]
+
+  members = [
+    data.azurerm_client_config.current.object_id,
   ]
 }
 
@@ -88,20 +91,20 @@ resource "azurerm_user_assigned_identity" "howtoaks" {
 
 resource "azurerm_role_assignment" "howtoaks_secret_officer" {
   principal_id         = azurerm_user_assigned_identity.howtoaks.principal_id
-  role_definition_name = "Key Vault Secret Officer"
+  role_definition_name = "Key Vault Secrets Officer"
   scope                = azurerm_key_vault.this.id
 }
 
-resource "azurerm_federated_identity_credential" "howtoaks" {
-  name                = "howtoaks"
-  parent_id           = azurerm_user_assigned_identity.howtoaks.id
-  resource_group_name = azurerm_resource_group.this.name
-  audience            = ["api://AzureADTokenExchange"]
-  issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
-  subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
+# resource "azurerm_federated_identity_credential" "howtoaks" {
+#   name                = "howtoaks"
+#   parent_id           = azurerm_user_assigned_identity.howtoaks.id
+#   resource_group_name = azurerm_resource_group.this.name
+#   audience            = ["api://AzureADTokenExchange"]
+#   issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
+#   subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
 
-  depends_on = [helm_release.howtoaks]
-}
+#   depends_on = [helm_release.howtoaks]
+# }
 
 resource "local_file" "kubeconfig" {
   content  = azurerm_kubernetes_cluster.this.kube_config_raw
