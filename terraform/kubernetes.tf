@@ -22,7 +22,7 @@ resource "terraform_data" "app_manifest_deployment" {
   provisioner "local-exec" {
     command = <<EOT
 cat <<EOF | KUBECONFIG=${local_file.kubeconfig.filename} kubectl apply -f -
-${templatefile("${path.module}/../deploy/manifest.yaml", {
+${templatefile("${path.module}/../weatherforecast/manifest.yaml", {
   namespace_name       = kubernetes_namespace.myapp.metadata[0].name
   service_account_name = kubernetes_service_account.myapp.metadata[0].name
   myapp_image          = "${azurerm_container_registry.this.login_server}/myapp/workload:latest"
