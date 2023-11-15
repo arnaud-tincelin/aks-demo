@@ -43,11 +43,11 @@ spec:
           #   readOnly: true
           livenessProbe:
             httpGet:
-              path: /
+              path: /weatherforecast
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /weatherforecast
               port: http
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}
