@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.api.service.port }}
+              containerPort: 80
               protocol: TCP
           # volumeMounts:
           # - name: {{ .Chart.Name }}-api-secretsstore
