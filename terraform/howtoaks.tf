@@ -31,17 +31,18 @@ resource "helm_release" "howtoaks" {
   name       = "myapp"
   repository = "https://arnaud-tincelin.github.io/aks-demo"
   chart      = "howtoaks"
+  version    = "1.0.9"
   namespace  = kubernetes_namespace.howtoaks.metadata[0].name
   values = [
     templatefile("${path.module}/howtoaks.yaml", {
-      api_image                = "${azurerm_container_registry.this.login_server}/howtoaks/api"
-      api_image_tag            = "latest"
+      api_image            = "${azurerm_container_registry.this.login_server}/howtoaks/api"
+      api_image_tag        = "latest"
+      frontend_image       = "${azurerm_container_registry.this.login_server}/howtoaks/frontend"
+      frontend_image_tag   = "latest"
       service_account_name = "howtoaks"
-      frontend_image           = "${azurerm_container_registry.this.login_server}/howtoaks/frontend"
-      frontend_image_tag       = "latest"
-      csi_client_id            = azurerm_user_assigned_identity.howtoaks.client_id
-      csi_tenant_id            = data.azurerm_client_config.current.tenant_id
-      csi_vault_name           = azurerm_key_vault.this.name
+      csi_client_id        = azurerm_user_assigned_identity.howtoaks.client_id
+      csi_tenant_id        = data.azurerm_client_config.current.tenant_id
+      csi_vault_name       = azurerm_key_vault.this.name
       csi_secrets = [
         {
           name    = azurerm_key_vault_secret.my_secret.name

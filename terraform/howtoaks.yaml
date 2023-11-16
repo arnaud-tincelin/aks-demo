@@ -16,10 +16,10 @@ frontend:
 csiSecretStore:
   clientID: ${csi_client_id}
   tenantId: ${csi_tenant_id}
-  keyvaultName: ${csi_vault_name}
+  vaultName: ${csi_vault_name}
   objects: %{if length(csi_secrets) == 0} []%{endif}
 %{for secret in csi_secrets ~}
   - objectName: ${secret.name}
     objectType: ${secret.type}
     objectVersion: ${secret.version}
-%{endfor~}
+%{endfor ~}
