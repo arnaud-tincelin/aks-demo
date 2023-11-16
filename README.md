@@ -11,12 +11,12 @@ Exposes a weather forecast api through an ingress (AGIC)
     - AKS: enable workload identity, Entra ID integration (RBAC), AGIC addon, CSI Secret store addon
 1. How to deploy `weatherforecast` app in Kubernetes (in default namespace)
     - Kubectl CLI
-1. Application overview
-1. AGIC presentation
-1. CSI Secret store presentation
-1. Build & push Docker Image to ACR
-1. Presentation of the Kube manifest / Helm chart
-1. Deploy Helm chart
+    - Build & push Docker Image to ACR
+1. `howtoaks` Application overview
+    - AGIC presentation
+    - CSI Secret store presentation
+    - Presentation of the Kube manifest / Helm chart
+    - Deploy Helm chart
 1. Network policies
 
 ## Deploy Infrastructure
@@ -51,4 +51,12 @@ cd ..
 helm repo index docs --url https://arnaud-tincelin.github.io/aks-demo
 helm repo add aks-demo https://arnaud-tincelin.github.io/aks-demo
 # helm install test aks-demo/howtoaks
+```
+
+## Test Network policies
+
+```bash
+KUBECONFIG=kubeconfig kubectl -n howtoaks run -i --tty busybox --image=busybox:1.28 -- sh
+wget myapp-howtoaks-front.howtoaks:8080/
+wget myapp-howtoaks-api.howtoaks:8081/weatherforecast
 ```
