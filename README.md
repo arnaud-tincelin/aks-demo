@@ -60,3 +60,5 @@ KUBECONFIG=kubeconfig kubectl -n howtoaks run -i --tty busybox --image=busybox:1
 wget myapp-howtoaks-front.howtoaks:8080/
 wget myapp-howtoaks-api.howtoaks:8081/weatherforecast
 ```
+
+## Use Kubernetes role-based access control with Microsoft Entra ID in Azure Kubernetes Service
