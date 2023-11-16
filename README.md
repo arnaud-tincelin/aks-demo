@@ -1,25 +1,17 @@
 # AKS-Demo Repository
 
-Exposes a weather forecast api through an ingress (AGIC)
+Exposes a weather forecast api and a howtoaks app through an ingress (AGIC)
 
-## Demo Scenario
+## Demonstrated Features
 
-1. Deploy infrastructure with terraform
-    - Network design (VNET, Subnets)
-    - Node pools design
-    - ACR
-    - AKS: enable workload identity, Entra ID integration (RBAC), AGIC addon, CSI Secret store addon
-1. How to deploy `weatherforecast` app in Kubernetes (in default namespace)
-    - Kubectl CLI
-    - Build & push Docker Image to ACR
-1. `howtoaks` Application overview
-    - AGIC presentation
-    - CSI Secret store presentation
-    - Presentation of the Kube manifest / Helm chart
-    - Deploy Helm chart
-1. Namespace security
-    - Network policies
-    - Entra ID RBAC
+1. AKS deployment through IaC (terraform)
+1. ACR Build tasks
+1. Deploy basic app using a kubernetes manifest (weatherforecast)
+1. AGIC integration (weatherforecast)
+1. Helm Charts packaging (howtoaks)
+1. CSI Secret Store and Workload Identity (howtoaks)
+1. Azure Network Policies
+1. Entra ID integration (RBAC)
 
 ## Deploy Infrastructure
 
@@ -52,7 +44,7 @@ cd ../docs
 helm package ../charts/howtoaks
 cd ..
 helm repo index docs --url https://arnaud-tincelin.github.io/aks-demo
-helm repo add aks-demo https://arnaud-tincelin.github.io/aks-demo
+# helm repo add aks-demo https://arnaud-tincelin.github.io/aks-demo
 # helm install test aks-demo/howtoaks
 ```
 
