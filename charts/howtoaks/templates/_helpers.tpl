@@ -86,9 +86,9 @@ app.kubernetes.io/stack: api
 Create the name of the service account to use
 */}}
 {{- define "howtoaks.serviceAccountName" -}}
-{{- if .Values.api.serviceAccount.create }}
-{{- default (include "howtoaks.fullnameApi" .) .Values.api.serviceAccount.name }}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "howtoaks.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.api.serviceAccount.name }}
+{{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}

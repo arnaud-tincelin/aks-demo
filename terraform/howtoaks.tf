@@ -1,3 +1,26 @@
+resource "azurerm_user_assigned_identity" "howtoaks" {
+  name                = "howtoaks"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+}
+
+resource "azurerm_role_assignment" "howtoaks_secret_officer" {
+  principal_id         = azurerm_user_assigned_identity.howtoaks.principal_id
+  role_definition_name = "Key Vault Secrets Officer"
+  scope                = azurerm_key_vault.this.id
+}
+
+resource "azurerm_federated_identity_credential" "howtoaks" {
+  name                = "howtoaks"
+  parent_id           = azurerm_user_assigned_identity.howtoaks.id
+  resource_group_name = azurerm_resource_group.this.name
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
+  subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
+
+  depends_on = [helm_release.howtoaks]
+}
+
 resource "kubernetes_namespace" "howtoaks" {
   metadata {
     name = "howtoaks"
@@ -13,7 +36,7 @@ resource "helm_release" "howtoaks" {
     templatefile("${path.module}/howtoaks.yaml", {
       api_image                = "${azurerm_container_registry.this.login_server}/howtoaks/api"
       api_image_tag            = "latest"
-      api_service_account_name = "howtoaks"
+      service_account_name = "howtoaks"
       frontend_image           = "${azurerm_container_registry.this.login_server}/howtoaks/frontend"
       frontend_image_tag       = "latest"
       csi_client_id            = azurerm_user_assigned_identity.howtoaks.client_id
@@ -28,10 +51,4 @@ resource "helm_release" "howtoaks" {
       ]
     })
   ]
-}
-
-resource "terraform_data" "weatherforecast_deployment" {
-  provisioner "local-exec" {
-    command = "KUBECONFIG=${local_file.kubeconfig.filename} kubectl apply -f ${path.module}/../weatherforecast/manifest.yaml"
-  }
 }

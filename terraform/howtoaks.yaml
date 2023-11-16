@@ -1,9 +1,12 @@
+serviceAccount:
+  name: ${service_account_name}
+  annotations:
+    azure.workload.identity/client-id: ${csi_client_id}
+
 api:
   image:
     repository: ${api_image}
     tag: ${api_image_tag}
-  serviceAccount:
-    name: ${api_service_account_name}
 
 frontend:
   image:

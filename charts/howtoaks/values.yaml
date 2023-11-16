@@ -1,6 +1,10 @@
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
 
 api:
   replicaCount: 3
@@ -9,10 +13,6 @@ api:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
   podAnnotations: {}
   podSecurityContext: {}
     # fsGroup: 2000

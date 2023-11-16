@@ -34,9 +34,13 @@ spec:
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+          - name: http
+            containerPort: 80
+            protocol: TCP
+          volumeMounts:
+          - name: {{ .Chart.Name }}-front-secretsstore
+            mountPath: "/mnt/secretsstore"
+            readOnly: true
           livenessProbe:
             httpGet:
               path: /
@@ -47,6 +51,13 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
+      volumes:
+      - name: {{ .Chart.Name }}-front-secretsstore
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: {{ include "howtoaks.fullname" . }}
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

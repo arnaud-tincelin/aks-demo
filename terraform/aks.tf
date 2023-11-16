@@ -38,6 +38,7 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   network_profile {
     network_plugin = "azure"
+    network_policy = "azure"
   }
 
   ingress_application_gateway {
@@ -81,29 +82,6 @@ resource "azurerm_role_assignment" "aks_networkcontributor" {
   principal_id         = azurerm_kubernetes_cluster.this.ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
   role_definition_name = "Network Contributor"
   scope                = azurerm_subnet.gateway.id
-}
-
-resource "azurerm_user_assigned_identity" "howtoaks" {
-  name                = "howtoaks"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-}
-
-resource "azurerm_role_assignment" "howtoaks_secret_officer" {
-  principal_id         = azurerm_user_assigned_identity.howtoaks.principal_id
-  role_definition_name = "Key Vault Secrets Officer"
-  scope                = azurerm_key_vault.this.id
-}
-
-resource "azurerm_federated_identity_credential" "howtoaks" {
-  name                = "howtoaks"
-  parent_id           = azurerm_user_assigned_identity.howtoaks.id
-  resource_group_name = azurerm_resource_group.this.name
-  audience            = ["api://AzureADTokenExchange"]
-  issuer              = azurerm_kubernetes_cluster.this.oidc_issuer_url
-  subject             = "system:serviceaccount:${kubernetes_namespace.howtoaks.metadata[0].name}:howtoaks"
-
-  depends_on = [helm_release.howtoaks]
 }
 
 resource "local_file" "kubeconfig" {
