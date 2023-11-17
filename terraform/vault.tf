@@ -16,7 +16,7 @@ resource "azurerm_role_assignment" "current_user_vault_administrator" {
 }
 
 resource "azurerm_key_vault_secret" "my_secret" {
-  name         = "my-secret"
+  name         = "mysecret"
   value        = "my-secret-value"
   key_vault_id = azurerm_key_vault.this.id
 
