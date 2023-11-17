@@ -42,8 +42,10 @@ namespace HowToAKS.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
+            ViewBag.Result = await System.IO.File.ReadAllTextAsync("/mnt/secretstore/mysecret");
+
             return View();
         }
 
